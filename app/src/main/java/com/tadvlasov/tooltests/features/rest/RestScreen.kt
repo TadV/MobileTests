@@ -1,11 +1,13 @@
-package com.tadvlasov.tooltests.core
+package com.tadvlasov.tooltests.features.rest
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -13,20 +15,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.tadvlasov.tooltests.core.ScreenWrapperWithNavView
 
-import com.tadvlasov.tooltests.navigation.NavRoute
 
 @Composable
-fun StartScreen (navController: NavController) {
+fun RestScreen (navController: NavController) {
+    ScreenWrapperWithNavView(navController, content = { RestScreenContent() })
+}
+
+@Composable
+private fun RestScreenContent() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp),
+            .background(Color.Cyan)
+            .padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Тестирование", //stringResource(R.string.app_name),
+            text = "Тестирование REST", //stringResource(R.string.app_name),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp, 10.dp),
@@ -37,24 +45,19 @@ fun StartScreen (navController: NavController) {
             ),
             textAlign = TextAlign.Center
         )
-        SimpleButton(text = "REST", onClick = { navController.navigate(NavRoute.RestScreen.route) {} } )
-        SimpleButton(text = "GPS", onClick = { navController.navigate(NavRoute.GpsScreen.route) {} } )
-        SimpleButton(text = "ROOM DB", onClick = { navController.navigate(NavRoute.RoomDBScreen.route) {} } )
-    }
-}
-
-@Composable
-fun SimpleButton(text: String, onClick: () -> Unit) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp, 10.dp)
-            .height(50.dp),
-    ) {
-        Text(
-            text = text,
-            fontSize = 20.sp,
-        )
+        Button(
+            onClick = {
+                ApiConnector.test()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp, 10.dp)
+                .height(50.dp),
+        ) {
+            Text(
+                text = "Test Auth",
+                fontSize = 20.sp,
+            )
+        }
     }
 }
